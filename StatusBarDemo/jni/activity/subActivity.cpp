@@ -4,6 +4,7 @@
 #include "subActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mButton1Ptr;
 static ZKQRCode* mQrcode1Ptr;
 static ZKTextView* mTextview1Ptr;
 
@@ -42,6 +43,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_SUB_Button1, onButtonClick_Button1,
 };
 /***************/
 
@@ -122,6 +124,7 @@ const char* subActivity::getAppName() const{
 //TAG:onCreate
 void subActivity::onCreate() {
 	Activity::onCreate();
+    mButton1Ptr = (ZKButton*)findControlByID(ID_SUB_Button1);
     mQrcode1Ptr = (ZKQRCode*)findControlByID(ID_SUB_Qrcode1);
     mTextview1Ptr = (ZKTextView*)findControlByID(ID_SUB_Textview1);
 	onUI_init();

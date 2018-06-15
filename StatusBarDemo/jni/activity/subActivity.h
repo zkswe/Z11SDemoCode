@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_SUB_Button1    20001
 #define ID_SUB_Qrcode1    92001
 #define ID_SUB_Textview1    50001
 /*TAG:Macro宏ID END*/

@@ -1,6 +1,7 @@
 #include "entry/EasyUIContext.h"
 #include "uart/UartContext.h"
 #include "manager/ConfigManager.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif  /* __cplusplus */

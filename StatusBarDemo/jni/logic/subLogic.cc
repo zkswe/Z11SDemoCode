@@ -64,3 +64,14 @@ static bool onsubActivityTouchEvent(const MotionEvent &ev) {
     // 返回false触摸事件将继续传递到控件上，返回true表示该触摸事件在此被拦截了，不再传递到控件上
     return false;
 }
+
+static bool onButtonClick_Button1(ZKButton *pButton) {
+    //LOGD(" ButtonClick Button1 !!!\n");
+	if (EASYUICONTEXT->isStatusBarShow()) {
+		EASYUICONTEXT->hideStatusBar();
+	} else {
+		EASYUICONTEXT->showStatusBar();
+	}
+    return false;
+}
+
