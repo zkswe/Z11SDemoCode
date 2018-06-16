@@ -65,6 +65,7 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
     return false;
 }
 static void onEditTextChanged_Edittext1(const std::string &text) {
-    //LOGD(" onEditTextChanged_ Edittext1 %s !!!\n", text.c_str());
+
+	mQrcode1Ptr->loadQRCode(text.c_str());
 }
 
