@@ -29,6 +29,32 @@
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
 
+//实现长按监听接口
+class LongClickListener : public ZKBase::ILongClickListener {
+
+	virtual void onLongClick(ZKBase *pBase) {
+        LOGD("触发长按事件");
+        static int count = 0;
+
+        char buf[128] = {0};
+        snprintf(buf, sizeof(buf), "长按事件触发次数 %d", ++count);
+        mLongButtonPtr->setText(buf);
+	}
+};
+
+static LongClickListener longButtonClickListener;
+
+
+static void onUI_init(){
+
+	//注册按键长按监听
+	mLongButtonPtr->setLongClickListener(&longButtonClickListener);
+}
+
+static void onUI_quit() {
+	//取消按键长按监听
+    mLongButtonPtr->setLongClickListener(NULL);
+}
 
 /**
  * 注册定时器
@@ -38,16 +64,6 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	//{0,  6000}, //定时器id=0, 时间间隔6秒
 	//{1,  1000},
 };
-
-static void onUI_init(){
-    //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
-
-}
-
-static void onUI_quit() {
-
-}
-
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
     // 串口数据回调接口
@@ -65,7 +81,7 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
 }
 
 static bool onButtonClick_Button1(ZKButton *pButton) {
-    //LOGD(" ButtonClick Button1 !!!\n");
+    LOGD(" ButtonClick Button1 !!!\n");
 	pButton->setSelected(!pButton->isSelected());
     return false;
 }
@@ -84,5 +100,6 @@ static bool onButtonClick_ClkButton(ZKButton *pButton) {
 
 static bool onButtonClick_LongButton(ZKButton *pButton) {
     //LOGD(" ButtonClick LongButton !!!\n");
+
     return false;
 }
