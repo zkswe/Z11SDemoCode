@@ -38,13 +38,13 @@ public:
 		case MountMonitor::E_MOUNT_STATUS_MOUNTED:	// 插入
 			// msg 为挂载路径
 			LOGD("mount path: %s\n", msg);
-			mMountTextviewPtr->setText("T卡已插入");
+			mMountTextviewPtr->setText("SD卡已插入");
 			break;
 
 		case MountMonitor::E_MOUNT_STATUS_REMOVE:	// 移除
 			// msg 为卸载路径
 			LOGD("remove path: %s\n", msg);
-			mMountTextviewPtr->setText("T卡已移除");
+			mMountTextviewPtr->setText("SD卡已移除");
 			break;
 		}
 	}
