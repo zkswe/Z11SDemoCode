@@ -4,6 +4,8 @@
 #include "mainActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextview1Ptr;
+static ZKWindow* mWindow1Ptr;
 static ZKSlideWindow* mSlidewindow1Ptr;
 
 /*register activity*/
@@ -122,6 +124,8 @@ const char* mainActivity::getAppName() const{
 //TAG:onCreate
 void mainActivity::onCreate() {
 	Activity::onCreate();
+    mTextview1Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview1);
+    mWindow1Ptr = (ZKWindow*)findControlByID(ID_MAIN_Window1);
     mSlidewindow1Ptr = (ZKSlideWindow*)findControlByID(ID_MAIN_Slidewindow1);if(mSlidewindow1Ptr!= NULL){mSlidewindow1Ptr->setSlideItemClickListener(this);}
 	onUI_init();
         // 注册监听全局触摸

@@ -64,6 +64,15 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
     return false;
 }
 
+static const char *sTipTab[] = {
+	"文本/图片", "进度条", "按键", "输入框", "波形图", "图形旋转",
+	"窗口", "视频", "列表", "广告", "二维码"
+};
+
 static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {
 	LOGD(" onSlideItemClick_ Slidewindow1 %d !!!\n", index);
+	char text[50];
+	sprintf(text, "点击了<%s>图标", sTipTab[index]);
+	mTextview1Ptr->setText(text);
+	mWindow1Ptr->showWnd();
 }
