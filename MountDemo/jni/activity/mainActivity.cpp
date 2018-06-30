@@ -4,9 +4,9 @@
 #include "mainActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextview3Ptr;
+static ZKTextView* mMountTextviewPtr;
 static ZKTextView* mTextview1Ptr;
-static ZKWindow* mWindow1Ptr;
-static ZKSlideWindow* mSlidewindow1Ptr;
 
 /*register activity*/
 REGISTER_ACTIVITY(mainActivity);
@@ -78,7 +78,6 @@ typedef struct {
 }S_SlideWindowItemClickCallback;
 /*TAG:SlideWindowFunctionsCallbackTab*/
 static S_SlideWindowItemClickCallback SSlideWindowItemClickCallbackTab[] = {
-    ID_MAIN_Slidewindow1, onSlideItemClick_Slidewindow1,
 };
 
 
@@ -124,9 +123,9 @@ const char* mainActivity::getAppName() const{
 //TAG:onCreate
 void mainActivity::onCreate() {
 	Activity::onCreate();
+    mTextview3Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview3);
+    mMountTextviewPtr = (ZKTextView*)findControlByID(ID_MAIN_MountTextview);
     mTextview1Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview1);
-    mWindow1Ptr = (ZKWindow*)findControlByID(ID_MAIN_Window1);
-    mSlidewindow1Ptr = (ZKSlideWindow*)findControlByID(ID_MAIN_Slidewindow1);if(mSlidewindow1Ptr!= NULL){mSlidewindow1Ptr->setSlideItemClickListener(this);}
 	onUI_init();
         // 注册监听全局触摸
     EASYUICONTEXT->registerGlobalTouchListener(this);

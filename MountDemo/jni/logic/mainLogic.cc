@@ -29,6 +29,28 @@
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
 
+#include "os/MountMonitor.h"
+
+class MyMountListener : public MountMonitor::IMountListener {
+public:
+	virtual void notify(int what, int status, const char *msg) {
+		switch (status) {
+		case MountMonitor::E_MOUNT_STATUS_MOUNTED:	// 插入
+			// msg 为挂载路径
+			LOGD("mount path: %s\n", msg);
+			mMountTextviewPtr->setText("SD卡已插入");
+			break;
+
+		case MountMonitor::E_MOUNT_STATUS_REMOVE:	// 移除
+			// msg 为卸载路径
+			LOGD("remove path: %s\n", msg);
+			mMountTextviewPtr->setText("SD卡已移除");
+			break;
+		}
+	}
+};
+
+static MyMountListener sMyMountListener;
 
 /**
  * 注册定时器
@@ -42,12 +64,14 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 static void onUI_init() {
     //Tips :添加 UI初始化的显示代码到这里,如:mText1Ptr->setText("123");
 
+	// 注册监听
+	MOUNTMONITOR->addMountListener(&sMyMountListener);
 }
 
 static void onUI_quit() {
-
+	// 移除监听
+	MOUNTMONITOR->removeMountListener(&sMyMountListener);
 }
-
 
 static void onProtocolDataUpdate(const SProtocolData &data) {
     // 串口数据回调接口
@@ -62,17 +86,4 @@ static bool onUI_Timer(int id) {
 static bool onmainActivityTouchEvent(const MotionEvent &ev) {
     // 返回false触摸事件将继续传递到控件上，返回true表示该触摸事件在此被拦截了，不再传递到控件上
     return false;
-}
-
-static const char *sTipTab[] = {
-	"文本/图片", "进度条", "按键", "输入框", "波形图", "图形旋转",
-	"窗口", "视频", "列表", "广告", "二维码"
-};
-
-static void onSlideItemClick_Slidewindow1(ZKSlideWindow *pSlideWindow, int index) {
-	LOGD(" onSlideItemClick_ Slidewindow1 %d !!!\n", index);
-	char text[50];
-	sprintf(text, "点击了<%s>图标", sTipTab[index]);
-	mTextview1Ptr->setText(text);
-	mWindow1Ptr->showWnd();
 }

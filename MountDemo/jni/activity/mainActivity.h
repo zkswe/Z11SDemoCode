@@ -26,9 +26,9 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_MAIN_Textview3    50003
+#define ID_MAIN_MountTextview    50002
 #define ID_MAIN_Textview1    50001
-#define ID_MAIN_Window1    110001
-#define ID_MAIN_Slidewindow1    30001
 /*TAG:Macro宏ID END*/
 
 class mainActivity : public Activity, 
