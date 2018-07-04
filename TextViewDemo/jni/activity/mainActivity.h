@@ -26,6 +26,8 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_MAIN_Textview5    50008
+#define ID_MAIN_TextviewAnimation    50005
 #define ID_MAIN_ColorTextview    50024
 #define ID_MAIN_Textview27    50023
 #define ID_MAIN_StrTextview    50021

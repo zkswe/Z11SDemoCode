@@ -35,8 +35,17 @@ static void updateTime() {
 	char timeStr[20];
 	struct tm *t = TimeHelper::getDateTime();
 
-	sprintf(timeStr, "%02d:%02d", t->tm_hour, t->tm_min);
+	snprintf(timeStr, sizeof(timeStr), "%02d:%02d", t->tm_hour, t->tm_min);
 	mTextTimePtr->setText(timeStr);
+}
+
+
+static void updateAnimation(){
+    static int animationIndex = 0;
+	char path[50] = {0};
+	snprintf(path, sizeof(path), "animation/loading_%d.png", animationIndex);
+	mTextviewAnimationPtr->setBackgroundPic(path);
+	animationIndex = (animationIndex + 1) % 60;
 }
 
 /**
@@ -45,7 +54,7 @@ static void updateTime() {
  */
 static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 	{ 0, 1000 },	// 定时器id=0, 时间间隔1秒
-//	{ 1, 1000 },
+	{ 1, 50 },
 };
 
 static void onUI_init() {
@@ -65,30 +74,42 @@ static void onProtocolDataUpdate(const SProtocolData &data) {
 static bool onUI_Timer(int id) {
     //Tips:添加定时器响应的代码到这里,但是需要在本文件的 REGISTER_ACTIVITY_TIMER_TAB 数组中 注册
     //id 是定时器设置时候的标签,这里不要写耗时的操作，否则影响UI刷新,ruturn:[true] 继续运行定时器;[false] 停止运行当前定时器
+    switch (id) {
+		case 0:
+		{
+			updateTime();
 
-	updateTime();
+			static int num = 0;
+			// 设置数字
+			mNumTextviewPtr->setText(num);
+			num = (num + 1) % 10;
 
-	static int num = 0;
-	// 设置数字
-	mNumTextviewPtr->setText(num);
-	num = (num + 1) % 10;
+			static char chr = 'A';
+			// 设置字符
+			mCharTextviewPtr->setText(chr);
 
-	static char chr = 'A';
-	// 设置字符
-	mCharTextviewPtr->setText(chr);
+			char str[4] = { 0 };
+			str[0] = str[1] = str[2] = chr;
+			// 设置字符串
+			mStrTextviewPtr->setText(str);
 
-	char str[4] = { 0 };
-	str[0] = str[1] = str[2] = chr;
-	// 设置字符串
-	mStrTextviewPtr->setText(str);
+			chr++;
+			if (chr > 'Z') { chr = 'A'; }
 
-	chr++;
-	if (chr > 'Z') { chr = 'A'; }
-
-	static int index = 0;
-	int colTab[5] = { 0xFF0000, 0x00FF00, 0x0000FF, 0xFFFFFF, 0x000000 };
-	mColorTextviewPtr->setTextColor(colTab[index]);
-	index = (index + 1) % 5;
+			static int index = 0;
+			int colTab[5] = { 0xFF0000, 0x00FF00, 0x0000FF, 0xFFFFFF, 0x000000 };
+			mColorTextviewPtr->setTextColor(colTab[index]);
+			index = (index + 1) % 5;
+		}
+			break;
+		case 1:
+		{
+			updateAnimation();
+		}
+			break;
+		default:
+			break;
+	}
 
     return true;
 }
