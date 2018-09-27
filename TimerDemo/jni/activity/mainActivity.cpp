@@ -4,7 +4,12 @@
 #include "mainActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKTextView* mTextviewSumPtr;
+static ZKTextView* mTextview2Ptr;
+static ZKButton* mButtonTimerOnPtr;
+static ZKButton* mButtonTimerOffPtr;
 static ZKTextView* mTextview1Ptr;
+static mainActivity* mActivityPtr;
 
 /*register activity*/
 REGISTER_ACTIVITY(mainActivity);
@@ -41,6 +46,8 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_MAIN_ButtonTimerOn, onButtonClick_ButtonTimerOn,
+    ID_MAIN_ButtonTimerOff, onButtonClick_ButtonTimerOff,
 };
 /***************/
 
@@ -121,12 +128,14 @@ const char* mainActivity::getAppName() const{
 //TAG:onCreate
 void mainActivity::onCreate() {
 	Activity::onCreate();
+    mTextviewSumPtr = (ZKTextView*)findControlByID(ID_MAIN_TextviewSum);
+    mTextview2Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview2);
+    mButtonTimerOnPtr = (ZKButton*)findControlByID(ID_MAIN_ButtonTimerOn);
+    mButtonTimerOffPtr = (ZKButton*)findControlByID(ID_MAIN_ButtonTimerOff);
     mTextview1Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview1);
+	mActivityPtr = this;
 	onUI_init();
-        // 注册监听全局触摸
-    EASYUICONTEXT->registerGlobalTouchListener(this);
     registerProtocolDataUpdateListener(onProtocolDataUpdate); 
-
     rigesterActivityTimer();
 }
 
@@ -156,18 +165,21 @@ void mainActivity::onClick(ZKBase *pBase) {
 
 void mainActivity::onResume() {
 	Activity::onResume();
+	EASYUICONTEXT->registerGlobalTouchListener(this);
 	startVideoLoopPlayback();
+	onUI_show();
 }
 
 void mainActivity::onPause() {
 	Activity::onPause();
+	EASYUICONTEXT->unregisterGlobalTouchListener(this);
 	stopVideoLoopPlayback();
+	onUI_hide();
 }
 
 void mainActivity::onIntent(const Intent *intentPtr) {
-	//TODO:  
-	
 	Activity::onIntent(intentPtr);
+	onUI_intent(intentPtr);
 }
 
 bool mainActivity::onTimer(int id) {
@@ -366,17 +378,25 @@ bool mainActivity::parseVideoFileList(const char *pFileListPath, std::vector<str
 
 int mainActivity::removeCharFromString(string& nString, char c) {
     string::size_type   pos;
-    while(1)
-    {
+    while(1) {
         pos = nString.find(c);
-        if(pos != string::npos)
-        {
+        if(pos != string::npos) {
             nString.erase(pos, 1);
-        }
-        else
-        {
+        } else {
             break;
         }
     }
     return (int)nString.size();
+}
+
+void mainActivity::registerUserTimer(int id, int time) {
+	registerTimer(id, time);
+}
+
+void mainActivity::unregisterUserTimer(int id) {
+	unregisterTimer(id);
+}
+
+void mainActivity::resetUserTimer(int id, int time) {
+	resetUserTimer(id, time);
 }

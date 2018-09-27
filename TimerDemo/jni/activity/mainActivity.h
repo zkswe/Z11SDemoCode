@@ -26,6 +26,10 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_MAIN_TextviewSum    50003
+#define ID_MAIN_Textview2    50002
+#define ID_MAIN_ButtonTimerOn    20001
+#define ID_MAIN_ButtonTimerOff    20002
 #define ID_MAIN_Textview1    50001
 /*TAG:Macro宏ID END*/
 
@@ -41,6 +45,19 @@ class mainActivity : public Activity,
 public:
     mainActivity();
     virtual ~mainActivity();
+
+    /**
+     * 注册定时器
+     */
+	void registerUserTimer(int id, int time);
+	/**
+	 * 取消定时器
+	 */
+	void unregisterUserTimer(int id);
+	/**
+	 * 重置定时器
+	 */
+	void resetUserTimer(int id, int time);
 
 protected:
     /*TAG:PROTECTED_FUNCTION*/
