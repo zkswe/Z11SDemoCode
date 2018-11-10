@@ -29,7 +29,6 @@
 *
 * 在Eclipse编辑器中  使用 “alt + /”  快捷键可以打开智能提示
 */
-#include "manager/LanguageManager.h"
 
 /**
  * 注册定时器
@@ -44,7 +43,8 @@ static S_ACTIVITY_TIMEER REGISTER_ACTIVITY_TIMER_TAB[] = {
 /**
  * 当界面构造时触发
  */
-static void onUI_init(){
+static void onUI_init() {
+	// 不用带'@'符号
     mTextview1Ptr->setTextTr("hello_world");
 }
 
@@ -114,27 +114,26 @@ static bool onUI_Timer(int id){
  *            触摸事件将继续传递到控件上
  */
 static bool onmainActivityTouchEvent(const MotionEvent &ev) {
-
 	return false;
 }
+
 static bool onButtonClick_Button1(ZKButton *pButton) {
+	// 跳转到语言设置界面
     EASYUICONTEXT->openActivity("LanguageSettingActivity");
     return false;
 }
+
 static bool onButtonClick_Button2(ZKButton *pButton) {
-	LANGUAGEMANAGER->setCurrentCode("zh_CN"); //设置为中文
-	mTextview1Ptr->reloadTextTr();  //重新加载内容
+	EASYUICONTEXT->updateLocalesCode("zh_CN"); // 设置为中文
     return false;
 }
 
 static bool onButtonClick_Button3(ZKButton *pButton) {
-	LANGUAGEMANAGER->setCurrentCode("en_US"); //设置为英文
-	mTextview1Ptr->reloadTextTr(); //重新加载内容
+	EASYUICONTEXT->updateLocalesCode("en_US"); //设置为英文
     return false;
 }
 
 static bool onButtonClick_Button4(ZKButton *pButton) {
-	LANGUAGEMANAGER->setCurrentCode("ja_JP"); ////设置为日语
-	mTextview1Ptr->reloadTextTr(); //重新加载内容
+	EASYUICONTEXT->updateLocalesCode("ja_JP"); //设置为日语
     return false;
 }
