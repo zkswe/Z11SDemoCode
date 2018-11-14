@@ -1,0 +1,24 @@
+与常规项目的改动如下：
+
+1. 代码uart部分经过修改，所以项目属性里的串口配置失效。
+2. 串口号及波特率请修改 jni/uart/UartContext.cpp 文件中的 init()函数
+3. 发送数据到指定串口 
+    unsigned char buf[2] = {1, 1};
+    sendProtocolTo(UART_TTYS1, 1, buf, 2);
+
+    unsigned char buf[2] = {0};
+    sendProtocolTo(UART_TTYS0, 1, buf, 2);
+
+4. 接收串口数据与常规项目相同
+  如果需要区分数据来自哪一个串口，建议在SProtocolData 结构体中添加一个字段标识串口
+/**
+ * 串口数据回调接口
+ */
+static void onProtocolDataUpdate(const SProtocolData &data) {
+    LOGD("onProtocol %d", data.uart_from);
+
+    char buf[128] = {0};
+    snprintf(buf, sizeof(buf), "收到串口 %d的数据", data.uart_from);
+
+    mTextview1Ptr->setText(buf);
+}
