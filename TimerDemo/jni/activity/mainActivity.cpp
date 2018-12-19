@@ -4,6 +4,7 @@
 #include "mainActivity.h"
 
 /*TAG:GlobalVariable全局变量*/
+static ZKButton* mButtonResetPtr;
 static ZKTextView* mTextviewSumPtr;
 static ZKTextView* mTextview2Ptr;
 static ZKButton* mButtonTimerOnPtr;
@@ -46,6 +47,7 @@ typedef struct {
 
 /*TAG:ButtonCallbackTab按键映射表*/
 static S_ButtonCallback sButtonCallbackTab[] = {
+    ID_MAIN_ButtonReset, onButtonClick_ButtonReset,
     ID_MAIN_ButtonTimerOn, onButtonClick_ButtonTimerOn,
     ID_MAIN_ButtonTimerOff, onButtonClick_ButtonTimerOff,
 };
@@ -128,6 +130,7 @@ const char* mainActivity::getAppName() const{
 //TAG:onCreate
 void mainActivity::onCreate() {
 	Activity::onCreate();
+    mButtonResetPtr = (ZKButton*)findControlByID(ID_MAIN_ButtonReset);
     mTextviewSumPtr = (ZKTextView*)findControlByID(ID_MAIN_TextviewSum);
     mTextview2Ptr = (ZKTextView*)findControlByID(ID_MAIN_Textview2);
     mButtonTimerOnPtr = (ZKButton*)findControlByID(ID_MAIN_ButtonTimerOn);
@@ -398,5 +401,5 @@ void mainActivity::unregisterUserTimer(int id) {
 }
 
 void mainActivity::resetUserTimer(int id, int time) {
-	resetUserTimer(id, time);
+	resetTimer(id, time);
 }

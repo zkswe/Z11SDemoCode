@@ -26,6 +26,7 @@
 #include "window/ZKSlideWindow.h"
 
 /*TAG:Macro宏ID*/
+#define ID_MAIN_ButtonReset    20003
 #define ID_MAIN_TextviewSum    50003
 #define ID_MAIN_Textview2    50002
 #define ID_MAIN_ButtonTimerOn    20001
