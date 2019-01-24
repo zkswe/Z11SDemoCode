@@ -1,0 +1,35 @@
+configure: Configured to build curl/libcurl:
+
+  curl version:     7.53.1
+  Host setup:       arm-unknown-linux-androideabi
+  Install prefix:   
+  Compiler:         
+  SSL support:      enabled (OpenSSL)
+  SSH support:      no      (--with-libssh2)
+  zlib support:     enabled
+  GSS-API support:  no      (--with-gssapi)
+  TLS-SRP support:  enabled
+  resolver:         default (--enable-ares / --enable-threaded-resolver)
+  IPv6 support:     enabled
+  Unix sockets support: enabled
+  IDN support:      no      (--with-{libidn2,winidn})
+  Build libcurl:    Shared=yes, Static=yes
+  Built-in manual:  enabled
+  --libcurl option: enabled (--disable-libcurl-option)
+  Verbose errors:   enabled (--disable-verbose)
+  SSPI support:     no      (--enable-sspi)
+  ca cert bundle:   no
+  ca cert path:     no
+  ca fallback:      no
+  LDAP support:     no      (--enable-ldap / --with-ldap-lib / --with-lber-lib)
+  LDAPS support:    no      (--enable-ldaps)
+  RTSP support:     enabled
+  RTMP support:     no      (--with-librtmp)
+  metalink support: no      (--with-libmetalink)
+  PSL support:      no      (libpsl not found)
+  HTTP2 support:    disabled (--with-nghttp2)
+  Protocols:        DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP
+
+  SONAME bump:     yes - WARNING: this library will be built with the SONAME
+                   number bumped due to (a detected) ABI breakage.
+                   See lib/README.curl_off_t for details on this.
