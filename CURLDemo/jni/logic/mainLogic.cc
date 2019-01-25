@@ -1,42 +1,5 @@
 #pragma once
 #include "uart/ProtocolSender.h"
-#include "utils/TimeHelper.h"
-#include "restclient-cpp/restclient.h"
-
-
-
-#include "../curl/curl.h"
-int testCURLSSL () {
-    CURL *curl;
-    CURLcode res;
-
-    curl = curl_easy_init();
-    if (curl)
-    {
-        curl_easy_setopt(curl, CURLOPT_URL, "https://www.baidu.com");
-        /* google.com is redirected, so we tell LibCurl to follow redirection */
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        /* SSL Options */
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER , 1);
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST , 1);
-        /* Provide CA Certs from http://curl.haxx.se/docs/caextract.html */
-        curl_easy_setopt(curl, CURLOPT_CAINFO, "/etc/cacert.pem");
-
-        /* Perform the request, res will get the return code */
-        res = curl_easy_perform(curl);
-        /* Check for errors */
-        if(res != CURLE_OK)
-            LOGD("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-
-        LOGD("success");
-        /* Always cleanup */
-        curl_easy_cleanup(curl);
-    }
-
-    return 0;
-}
-
-
 
 /**
  * 注册定时器
@@ -134,50 +97,6 @@ static bool onmainActivityTouchEvent(const MotionEvent &ev) {
 			break;
 	}
 	return false;
-}
-static bool onButtonClick_Button1(ZKButton *pButton) {
-    RestClient::Response r = RestClient::get("http://www.baidu.com");
-    mTextview1Ptr->setText(r.body);
-    return false;
-}
-static bool onButtonClick_Button2(ZKButton *pButton) {
-
-    return false;
-}
-
-static bool onButtonClick_Button3(ZKButton *pButton) {
-    RestClient::Response r = RestClient::get("https://www.baidu.com");
-    mTextview1Ptr->setText(r.body);
-    return false;
-}
-
-#include "json/json.h"
-static time_t get_timestamp_from_net(tm* out) {
-    RestClient::Response r = RestClient::get(
-            "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp");
-    if (r.code != 200) {
-        mTextview1Ptr->setText("请求失败");
-        return -1;
-    }
-
-    Json::Value root;   // will contains the root value after parsing.
-    Json::Reader reader;
-    bool parsingSuccessful = reader.parse(r.body, root );
-    if ( !parsingSuccessful )
-    {
-        mTextview1Ptr->setText(reader.getFormattedErrorMessages());
-        return -1;
-    }
-    mTextview1Ptr->setText(r.body);
-    if (root.isMember("data")) {
-        string timestamp_str = root["data"]["t"].asString();
-        time_t t = atoi(timestamp_str.substr(0, 10) .c_str()); //返回值为毫秒单位
-        if (out != NULL) {
-          *out = *gmtime(&t);
-        }
-        return t;
-    }
-    return -1;
 }
 
 static bool onButtonClick_ButtonHttp(ZKButton *pButton) {
